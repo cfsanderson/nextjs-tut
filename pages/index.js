@@ -1,23 +1,28 @@
 import Head from 'next/head'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-export default function Home() {
+function Home() {
+  const router = useRouter()
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push('/blog')
+  }
+
   return (
-    <div className="container">
+    <>
       <Head>
-        <title>Next.js Starter!</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>My Next.js Site</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-
-      <main>
-        <Header title="Welcome to my app!" />
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-      </main>
-
-      <Footer />
-    </div>
+      <div>My Next.js Site</div>
+      <Link href="/pokemon">
+        <a>Pokemon</a>
+      </Link>
+      <button onClick={handleClick}>Click me!</button>
+    </>
   )
 }
+
+export default Home
