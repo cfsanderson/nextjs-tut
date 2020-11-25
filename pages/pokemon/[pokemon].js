@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import Link from 'next/link'
+import Head from "next/head";
+import Link from "next/link";
+import styles from "./Pokemon.module.css";
 
 function Pokemon({ pokemon }) {
   return (
@@ -8,7 +9,7 @@ function Pokemon({ pokemon }) {
         <title>Pokemon: {pokemon?.name}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div>
+      <div className={styles.container}>
         Welcome, {pokemon?.name}!
         <img src={pokemon?.sprites.front_default} />
       </div>
@@ -16,32 +17,34 @@ function Pokemon({ pokemon }) {
         <a>Go back home</a>
       </Link>
     </>
-  )
+  );
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
-  const pokemon = await res.json()
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`);
+  const pokemon = await res.json();
 
-  let paths = pokemon.results.map(p => {
-    return `/pokemon/${p.name}`
-  })
+  let paths = pokemon.results.map((p) => {
+    return `/pokemon/${p.name}`;
+  });
 
   return {
     paths,
-    fallback: false
-  }
+    fallback: false,
+  };
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.pokemon}`)
-  const pokemon = await res.json()
+  const res = await fetch(
+    `https://pokeapi.co/api/v2/pokemon/${params.pokemon}`
+  );
+  const pokemon = await res.json();
 
   return {
     props: {
-      pokemon
-    }
-  }
+      pokemon,
+    },
+  };
 }
 
-export default Pokemon
+export default Pokemon;
